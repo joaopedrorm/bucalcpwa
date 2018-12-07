@@ -243,6 +243,7 @@ body {
   line-height: normal;
   padding: 0 16px;
   width: 100%;
+  font-weight: bold;
 }
 
 .card-text {
@@ -278,4 +279,12 @@ input {
   max-width: 90%;
   min-width: 80%;
   padding: 10px 0;
+}
+
+table {
+	width: 100%
+}
+
+th {
+	text-align: left
 }
