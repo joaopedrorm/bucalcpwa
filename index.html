@@ -26,17 +26,17 @@
 
   <main class="main">
     <div class="card cardTemplate" hidden>
-		<div class="city-key" hidden></div>
+		<div class="key" hidden></div>
 		<div class="card-last-updated" hidden></div>
 		<div class="card-title"></div>
 		
 		<div class="card-text">
-
+			<h3>Current state</h3>
 			<table>
 			  <tr>
 				<th>Balance</th>
-				<th>Outward</th> 
-				<th>Return</th>
+				<th>Outward price</th> 
+				<th>Return price</th>
 			  </tr>
 			  <tr>
 				<td class="balance"></td>
@@ -45,18 +45,19 @@
 			  </tr>
 			</table>
 			</br>
-			<table>
+			<h3>Recharge Options</h3>
+			<table class="resulttable">
 			  <tr>
 				<th>Outward Tickets</th>
 				<th>Return Tickets</th> 
 				<th>New Balance</th>
-				<th>Credit Addition</th>
+				<th>Credit Recharge</th>
 			  </tr>
-			  <tr class="resulttr">
+			  <tr class="resulttr" hidden>
 				<td class="outwardtickets"></td>
 				<td class="returntickets"></td>
 				<td class="newbalance"></td>
-				<td class="creditaddition"></td>
+				<td class="creditrecharge"></td>
 			  </tr>
 			</table>
 
@@ -68,6 +69,11 @@
     <div class="dialog">
       <div class="dialog-title">Add Card</div>
       <div class="dialog-body">
+	  
+		<div class="textfield">
+			<label for="label">Description</label>
+			<input type="text" id="label" />
+        </div>
 
 		<div class="textfield">
 			<label for="balance">Balance</label>
