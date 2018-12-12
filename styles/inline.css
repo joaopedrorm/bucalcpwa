@@ -288,3 +288,14 @@ table {
 th {
 	text-align: left
 }
+
+.close {
+	right: 0.5em;
+    background: transparent;
+    position: absolute;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0.5em 1em;
+	cursor: pointer;
+}

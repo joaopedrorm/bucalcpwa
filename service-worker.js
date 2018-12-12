@@ -15,10 +15,10 @@
 var dataCacheName = 'buCalc-v1';
 var cacheName = 'buCalcPWA-v1';
 var filesToCache = [
-	//'/',
-	//'./index.html',
-	//'./scripts/app.js',
-	//'./styles/inline.css'
+	'/',
+	'./index.html',
+	'./scripts/app.js',
+	'./styles/inline.css'
 ];
 
 self.addEventListener('install', function(e) {
