@@ -299,3 +299,24 @@ th {
     padding: 0.5em 1em;
 	cursor: pointer;
 }
+
+#buttonCancel { 
+	left: 0.5em;
+    bottom: 0.5em;
+    background: transparent;
+    position: absolute;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em 2.0em 0.5em 1.0em;
+    cursor: pointer;
+}
+
+#buttonOK {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5em 2.5em;
+    cursor: pointer;
+}
