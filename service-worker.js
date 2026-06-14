@@ -12,11 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Try to load shared config if available so cache name/version can be
+// derived from a single source (scripts/config.js).
+try {
+	importScripts('./scripts/config.js');
+} catch (err) {
+	// importScripts may fail in some environments; we'll fallback below.
+}
+
 var dataCacheName = 'buCalc-v1';
-var cacheName = 'buCalcPWA-v1';
+var cacheName = (typeof APP_CACHE_NAME !== 'undefined') ? APP_CACHE_NAME : 'unknown-version';
 var filesToCache = [
 	'./',
 	'./index.html',
+	'./manifest.json',
+	'./favicon.ico',
 	'./scripts/app.js',
 	'./styles/inline.css'
 ];
@@ -29,6 +39,12 @@ self.addEventListener('install', function(e) {
 			return cache.addAll(filesToCache);
 		})
 	);
+});
+
+self.addEventListener('message', function(event) {
+	if (event.data && event.data.type === 'SKIP_WAITING') {
+		self.skipWaiting();
+	}
 });
 
 self.addEventListener('activate', function(e) {

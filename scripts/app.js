@@ -2,12 +2,20 @@
 	'use strict';
 
 	var app = {
+		version: typeof APP_VERSION !== 'undefined' ? APP_VERSION : 'unknown',
 		isLoading: true,
 		visibleCards: {},
 		spinner: document.querySelector('.loader'),
 		cardTemplate: document.querySelector('.cardTemplate'),
 		container: document.querySelector('.main'),
 		addDialog: document.querySelector('.dialog-container'),
+	};
+
+	app.setVersionLabel = function() {
+		var versionLabel = document.getElementById('appVersion');
+		if (versionLabel) {
+			versionLabel.textContent = app.version;
+		}
 	};
 
 
@@ -84,6 +92,42 @@
 		app.spinner.setAttribute('hidden', false);
 		app.container.setAttribute('hidden', true);
 		app.isLoading = true;
+	}
+
+	app.promptForUpdate = function(worker) {
+		var updateMessage = 'Uma nova versão da aplicação está disponível. Atualizar agora?';
+		if (confirm(updateMessage)) {
+			worker.postMessage({ type: 'SKIP_WAITING' });
+		}
+	};
+
+	var refreshing = false;
+
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
+			console.log('Service Worker Registered');
+
+			if (registration.waiting) {
+				app.promptForUpdate(registration.waiting);
+			}
+
+			registration.addEventListener('updatefound', function() {
+				var installingWorker = registration.installing;
+				installingWorker.addEventListener('statechange', function() {
+					if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+						app.promptForUpdate(installingWorker);
+					}
+				});
+			});
+
+			registration.update();
+		});
+
+		navigator.serviceWorker.addEventListener('controllerchange', function() {
+			if (refreshing) return;
+			refreshing = true;
+			window.location.reload();
+		});
 	}
 
 	// Updates a card. If the card doesn't already exist, it's cloned from the template.
@@ -231,6 +275,7 @@
 		
 
 	// Startup code
+	app.setVersionLabel();
 	app.cards = app.loadCards();
 	if (app.cards) {
 		app.cards.forEach(function(card) {
@@ -246,9 +291,4 @@
 	
 	app.hideSpinner();
 
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker
-						 .register('./service-worker.js')
-						 .then(function() { console.log('Service Worker Registered'); });
-	}
 })();
